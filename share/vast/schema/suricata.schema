@@ -1,0 +1,444 @@
+type suricata.component.common = record {
+  timestamp: time #timestamp,
+  flow_id: count #index=hash,
+  pcap_cnt: count,
+  src_ip: addr,
+  src_port: port,
+  dest_ip: addr,
+  dest_port: port,
+  proto: string,
+  event_type: string,
+  community_id: string #index=hash
+}
+
+type suricata.component.flow = record {
+  pkts_toserver: count,
+  pkts_toclient: count,
+  bytes_toserver: count,
+  bytes_toclient: count,
+  start: time,
+  end: time,
+  age: count,
+  state: string,
+  reason: string,
+  alerted: bool
+}
+
+type suricata.component.app_proto = record {
+  app_proto: string
+}
+
+type suricata.alert = record {
+  timestamp: time #timestamp,
+  flow_id: count #index=hash,
+  pcap_cnt: count,
+  src_ip: addr,
+  src_port: port,
+  dest_ip: addr,
+  dest_port: port,
+  proto: string,
+  event_type: string,
+  community_id: string #index=hash,
+  alert: record {
+    app_proto: string,
+    action: enum {
+      allowed,
+      blocked
+    },
+    gid: count #index=hash,
+    signature_id: count #index=hash,
+    rev: count,
+    signature: string,
+    category: string,
+    severity: count,
+    source: record {
+      ip: addr,
+      port: port
+    },
+    target: record {
+      ip: addr,
+      port: port
+    }
+  },
+  flow: suricata.component.flow,
+  payload: string,
+  payload_printable: string,
+  stream: count,
+  packet: string,
+  packet_info: record {
+    linktype: count
+  }
+}
+
+type suricata.dhcp = record {
+  timestamp: time #timestamp,
+  flow_id: count #index=hash,
+  pcap_cnt: count,
+  src_ip: addr,
+  src_port: port,
+  dest_ip: addr,
+  dest_port: port,
+  proto: string,
+  event_type: string,
+  community_id: string #index=hash,
+  dhcp: record {
+    type: string,
+    id: count #index=hash,
+    client_mac: string #index=hash,
+    assigned_ip: addr,
+    client_ip: addr,
+    dhcp_type: string,
+    assigned_ip: addr,
+    client_id: string #index=hash,
+    hostname: string,
+    params: list<string>
+  }
+}
+
+type suricata.dns = record {
+  timestamp: time #timestamp,
+  flow_id: count #index=hash,
+  pcap_cnt: count,
+  src_ip: addr,
+  src_port: port,
+  dest_ip: addr,
+  dest_port: port,
+  proto: string,
+  event_type: string,
+  community_id: string #index=hash,
+  dns: record {
+    type: enum {
+      answer,
+      query
+    },
+    id: count #index=hash,
+    flags: string,
+    rrname: string,
+    rrtype: string,
+    rcode: string,
+    rdata: string,
+    ttl: count,
+    tx_id: count #index=hash
+  }
+}
+
+type suricata.ftp = record{
+  timestamp: time #timestamp,
+  flow_id: count #index=hash,
+  pcap_cnt: count,
+  src_ip: addr,
+  src_port: port,
+  dest_ip: addr,
+  dest_port: port,
+  proto: string,
+  event_type: string,
+  community_id: string #index=hash,
+  ftp: record{
+    command: string #index=hash,
+    command_data: string  #index=hash,
+    reply: list<string>,
+    completion_code: list<string>,
+    dynamic_port: port,
+    mode: string,
+    reply_received: string
+  }
+}
+
+type suricata.ftp_data = record{
+  timestamp: time #timestamp,
+  flow_id: count #index=hash,
+  pcap_cnt: count,
+  src_ip: addr,
+  src_port: port,
+  dest_ip: addr,
+  dest_port: port,
+  proto: string,
+  event_type: string,
+  community_id: string #index=hash,
+  ftp_data: record{
+    filename: string #index=hash,
+    command: string  #index=hash
+  }
+}
+
+type suricata.http = record {
+  timestamp: time #timestamp,
+  flow_id: count #index=hash,
+  pcap_cnt: count,
+  src_ip: addr,
+  src_port: port,
+  dest_ip: addr,
+  dest_port: port,
+  proto: string,
+  event_type: string,
+  community_id: string #index=hash,
+  http: record {
+    hostname: string,
+    url: string,
+    http_port: port,
+    http_user_agent: string,
+    http_content_type: string,
+    http_method: string,
+    http_refer: string,
+    protocol: string,
+    status: count,
+    redirect: string,
+    length: count
+  },
+  tx_id: count #index=hash
+}
+
+type suricata.fileinfo = record {
+  timestamp: time #timestamp,
+  flow_id: count #index=hash,
+  pcap_cnt: count,
+  src_ip: addr,
+  src_port: port,
+  dest_ip: addr,
+  dest_port: port,
+  proto: string,
+  event_type: string,
+  community_id: string #index=hash,
+  fileinfo: record {
+    filename: string,
+    magic: string,
+    gaps: bool,
+    state: string,
+    md5: string #index=hash,
+    sha1: string #index=hash,
+    sha256: string #index=hash,
+    stored: bool,
+    file_id: count #index=hash,
+    size: count,
+    tx_id: count #index=hash
+  },
+  http: record {
+    hostname: string,
+    url: string,
+    http_port: port,
+    http_user_agent: string,
+    http_content_type: string,
+    http_method: string,
+    http_refer: string,
+    protocol: string,
+    status: count,
+    redirect: string,
+    length: count
+  },
+  app_proto: string
+}
+
+type suricata.flow = record {
+  timestamp: time #timestamp,
+  flow_id: count #index=hash,
+  pcap_cnt: count,
+  src_ip: addr,
+  src_port: port,
+  dest_ip: addr,
+  dest_port: port,
+  proto: string,
+  event_type: string,
+  community_id: string #index=hash,
+  flow: suricata.component.flow,
+  app_proto: string
+}
+
+type suricata.krb5 = record {
+  timestamp: time #timestamp,
+  flow_id: count #index=hash,
+  in_iface: string,
+  vlan: count,
+  src_ip: addr,
+  src_port: port,
+  dest_ip: addr,
+  dest_port: port,
+  proto: string,
+  event_type: string,
+  community_id: string #index=hash,
+  krb5: record {
+    encryption: string,
+    error_code: string,
+    cname: string,
+    msg_type: string,
+    weak_encryption: bool,
+    realm: string,
+    failed_request: string,
+    sname: string
+  },
+  host: string
+}
+
+type suricata.netflow = record {
+  timestamp: time #timestamp,
+  flow_id: count #index=hash,
+  pcap_cnt: count,
+  src_ip: addr,
+  src_port: port,
+  dest_ip: addr,
+  dest_port: port,
+  proto: string,
+  event_type: string,
+  community_id: string #index=hash,
+  netflow: record {
+    pkts: count,
+    bytes: count,
+    start: time,
+    end: time,
+    age: count
+  },
+  app_proto: string
+}
+
+type suricata.smb = record {
+  timestamp: time #timestamp,
+  flow_id: count #index=hash,
+  in_iface: string,
+  vlan: count,
+  src_ip: addr,
+  src_port: port,
+  dest_ip: addr,
+  dest_port: port,
+  proto: string,
+  event_type: string,
+  community_id: string #index=hash,
+  smb: record {
+    id: count,
+    dialect: string,
+    command: string,
+    status: string,
+    status_code: string,
+    session_id: count,
+    tree_id: count,
+    client_dialects: list<string>,
+    request: record {
+      native_lm: string,
+      native_os: string
+    },
+    response: record {
+      native_lm: string,
+      native_os: string
+    },
+    access: string,
+    client_guid: string,
+    fuid: string #index=hash,
+    directory: string,
+    kerberos: record {
+      realm: string
+    },
+    accessed: count,
+    function: string,
+    set_info: record {
+      info_level: string,
+      class: string
+    },
+    share: string,
+    modified: count,
+    ntlmssp: record {
+      host: string,
+      domain: string,
+      user: string
+    },
+    changed: count,
+    status: string,
+    size: count,
+    disposition: string,
+    server_guid: string,
+    filename: string,
+    created: count,
+    rename: record {
+      to: string,
+      from: string
+    },
+    named_pipe: string,
+    service: record {
+      request: string,
+      response: string
+    },
+    share_type: string
+  },
+  host: string
+}
+
+type suricata.ssh = record {
+  timestamp: time #timestamp,
+  flow_id: count #index=hash,
+  in_iface: string,
+  vlan: count,
+  src_ip: addr,
+  src_port: port,
+  dest_ip: addr,
+  dest_port: port,
+  proto: string,
+  event_type: string,
+  community_id: string #index=hash,
+  ssh: record {
+    client: record {
+      software_version: string,
+      proto_version: string
+    },
+    server: record {
+      software_version: string,
+      proto_version: string
+    }
+  },
+  host: string
+}
+
+type suricata.smtp = record {
+  timestamp: time #timestamp,
+  flow_id: count #index=hash,
+  pcap_cnt: count,
+  src_ip: addr,
+  src_port: port,
+  dest_ip: addr,
+  dest_port: port,
+  proto: string,
+  event_type: string,
+  community_id: string #index=hash,
+  tx_id: count #index=hash,
+  smtp: record {
+    helo: string,
+    mail_from: string,
+    rcpt_to: list<string>
+  },
+  email: record {
+    status: string,
+    from: string,
+    to: list<string>,
+    attachment: list<string>,
+    url: list<string>
+  }
+}
+
+type suricata.tls = record {
+  timestamp: time #timestamp,
+  flow_id: count #index=hash,
+  pcap_cnt: count,
+  src_ip: addr,
+  src_port: port,
+  dest_ip: addr,
+  dest_port: port,
+  proto: string,
+  event_type: string,
+  community_id: string #index=hash,
+  tls: record {
+    subject: string,
+    issuerdn: string,
+    serial: string,
+    fingerprint: string,
+    ja3: record {
+      hash: string #index=hash,
+      string: string
+    },
+    ja3s: record {
+      hash: string #index=hash,
+      string: string
+    },
+    notbefore: time,
+    notafter: time
+  }
+}
+
+type suricata.stats = record {
+  timestamp: time #timestamp
+}
