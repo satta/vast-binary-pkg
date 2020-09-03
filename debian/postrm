@@ -1,0 +1,23 @@
+#!/bin/sh
+
+set -e
+
+systemctl stop vast
+
+if [ "$1" = "purge" ] ; then
+    if dpkg-statoverride --list /var/db/vast >/dev/null 2>&1 ; then
+        dpkg-statoverride --remove /var/db/vast
+    fi
+    echo "Removing VAST db directory (/var/db/vast)"
+    rm -rf /var/db/vast
+
+     if dpkg-statoverride --list /var/log/vast >/dev/null 2>&1 ; then
+        dpkg-statoverride --remove /var/log/vast
+    fi
+    echo "Removing VAST log directory (/var/log/vast)"
+    rm -rf /var/log/vast
+
+    deluser  --system vast || echo "Could not remove VAST user."
+fi
+
+#DEBHELPER#

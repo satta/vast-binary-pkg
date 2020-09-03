@@ -1,0 +1,25 @@
+#!/bin/sh
+
+set -e
+
+systemctl stop vast
+
+if [ "$1" = configure ]; then
+    if ! getent passwd vast >/dev/null; then
+        adduser \
+            --system --group --no-create-home --home /var/db/vast \
+            vast
+    fi
+    if ! dpkg-statoverride --list /var/db/vast >/dev/null 2>&1; then
+        dpkg-statoverride \
+            --quiet --update \
+            --add vast vast 0750 /var/db/vast
+    fi
+    if ! dpkg-statoverride --list /var/log/vast >/dev/null 2>&1; then
+        dpkg-statoverride \
+            --quiet --update \
+            --add vast vast 0750 /var/log/vast
+    fi
+fi
+
+#DEBHELPER#

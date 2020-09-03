@@ -1,0 +1,10 @@
+/var/log/vast/* {
+       weekly
+       rotate 10
+       copytruncate
+       delaycompress
+       compress
+       notifempty
+       missingok
+       su root root
+}

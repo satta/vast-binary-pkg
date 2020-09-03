@@ -1,0 +1,18 @@
+Source: vast
+Section: net
+Priority: optional
+Maintainer: Sascha Steinbiss <satta@debian.org>
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.5.0
+Homepage: https://github.com/tenzir/vast
+
+Package: vast
+Architecture: amd64
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: network telemetry engine for data-driven security investigations
+ VAST is a distributed platform for high-performance network forensics and
+ incident response that provides both continuous ingestion of voluminous event
+ streams and interactive query performance.
+ VAST leverages a native implementation of the actor model to scale both
+ intra-machine across available CPU cores, and inter-machine over a cluster of
+ commodity systems.
