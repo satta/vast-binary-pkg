@@ -1,5 +1,5 @@
 Source: vast
-Section: net
+Section: database
 Priority: optional
 Maintainer: Sascha Steinbiss <satta@debian.org>
 Build-Depends: debhelper-compat (= 13)
