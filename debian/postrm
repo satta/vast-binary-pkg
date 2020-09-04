@@ -2,8 +2,6 @@
 
 set -e
 
-systemctl stop vast
-
 if [ "$1" = "purge" ] ; then
     if dpkg-statoverride --list /var/db/vast >/dev/null 2>&1 ; then
         dpkg-statoverride --remove /var/db/vast

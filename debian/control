@@ -2,7 +2,8 @@ Source: vast
 Section: database
 Priority: optional
 Maintainer: Sascha Steinbiss <satta@debian.org>
-Build-Depends: debhelper-compat (= 13)
+Build-Depends: debhelper-compat (= 13),
+               dh-systemd (>= 1.5)
 Standards-Version: 4.5.0
 Homepage: https://github.com/tenzir/vast
 

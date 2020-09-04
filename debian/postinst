@@ -2,9 +2,7 @@
 
 set -e
 
-systemctl stop vast
-
-if [ "$1" = configure ]; then
+if [ "$1" = "configure" ]; then
     if ! getent passwd vast >/dev/null; then
         adduser \
             --system --group --no-create-home --home /var/db/vast \
