@@ -4,4 +4,5 @@
 	dh $@  --with=systemd
 
 get-source:
-	curl -L -o ../vast-static-latest.tar.gz https://storage.googleapis.com/tenzir-public-data/vast-static-builds/vast-static-latest.tar.gz
+	curl -L -o ../vast-static-latest.tar.gz \
+	  https://storage.googleapis.com/tenzir-public-data/vast-static-builds/vast-static-latest.tar.gz
