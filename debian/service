@@ -23,7 +23,7 @@ RestrictSUIDSGID=yes
 
 # system access
 ProtectSystem=strict
-ReadWritePaths=/var/db/vast
+ReadWritePaths=/var/lib/vast
 ReadWritePaths=/var/log/vast
 PrivateTmp=yes
 ProtectHome=yes
@@ -38,7 +38,7 @@ SystemCallErrorNumber=EPERM
 
 # service specifics
 TimeoutStopSec=600
-WorkingDirectory=/var/db/vast
+WorkingDirectory=/var/lib/vast/db
 ExecStop=vast stop
 ExecStart=vast start
 

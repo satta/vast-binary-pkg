@@ -1,4 +1,4 @@
-/var/log/vast/* {
+/var/log/vast/*.log {
        weekly
        rotate 10
        copytruncate
@@ -9,7 +9,7 @@
        su root root
 }
 
-/var/db/vast/*.log {
+/var/lib/vast/db/*.log {
        weekly
        rotate 10
        copytruncate
