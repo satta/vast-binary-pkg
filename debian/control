@@ -9,7 +9,7 @@ Homepage: https://github.com/tenzir/vast
 
 Package: vast
 Architecture: amd64
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, adduser
 Description: network telemetry engine for data-driven security investigations
  VAST is a distributed platform for high-performance network forensics and
  incident response that provides both continuous ingestion of voluminous event
