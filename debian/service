@@ -36,6 +36,8 @@ ProtectKernelLogs=yes
 SystemCallFilter=@system-service
 SystemCallErrorNumber=EPERM
 
+LimitCORE=24000000000
+
 # service specifics
 TimeoutStopSec=600
 WorkingDirectory=/var/lib/vast/db
