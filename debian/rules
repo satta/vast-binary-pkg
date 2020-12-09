@@ -3,6 +3,12 @@
 %:
 	dh $@
 
+override_dh_dwz:
+	# pass
+
+override_dh_strip:
+	# pass
+
 get-source:
 	curl -L -o ../vast-static-latest.tar.gz \
 	  https://storage.googleapis.com/tenzir-public-data/vast-static-builds/vast-static-latest.tar.gz
