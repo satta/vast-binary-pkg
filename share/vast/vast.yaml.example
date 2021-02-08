@@ -9,21 +9,53 @@ vast:
   endpoint: "localhost:42000"
   # The file system path used for persistent state.
   db-directory: "vast.db"
+
   # The file system path used for log files.
   #log-file: "<db-directory>/server.log"
+
   # The file system path used for client log files relative to the current
   # working directory of the client. Note that this is disabled by default. If
   # not specified no log files are written for clients at all.
   #client-log-file: "client.log"
-  # List of paths to look for schema files in ascending order of priority.
+
+  # Format for printing individual log entries to the log-file.
+  # For a list of valid format specifiers, see spdlog format specification
+  # at https://github.com/gabime/spdlog/wiki/3.-Custom-formatting
+  # file-format:
+
+  # Configures the minimum severity of messages written to the log file.
+  # Possible values: quiet, error, warning, info, verbose, debug, trace.
+  # File logging is only available for commands that start a node (e.g.,
+  # vast start). The levels above 'verbose' are usually not available in
+  # release builds.
+  # file-verbosity: debug
+
+  # Mode for console log output generation. Automatic renders color only when
+  # writing to a tty.
+  # Possible values: always, automatic, never. (default automatic)
+  # console: automatic
+
+  # Format for printing individual log entries to the console.
+  # For a list of valid format specifiers, see spdlog format specification
+  # at https://github.com/gabime/spdlog/wiki/3.-Custom-formatting
+  # console-format:
+
+  # Configures the minimum severity of messages written to the console.
+  # For a list of valid log levels, see file-verbosity.
+  #console-verbosity: info
+
+  # List of directories to look for schema files in ascending order of priority.
   # Note: Automatically prepended with
   #  ["<binary_directory>/../share/vast/schema", "/etc/vast/schema"].
   # Use the no-default-schema option to turn off this mechanism.
-  #schema-paths: []
-  # The directories from which to load pluging at startup. VAST considers every
-  # file that ends in *.so or *.dylib as plugin and attempts to load them via
-  # dlopen(3).
-  plugin-paths: []
+
+  #schema-dirs: []
+  # Additional directories to load plugins specified using `vast.plugins` from.
+  plugin-dirs: []
+  # The plugins to load at startup. For relative paths, VAST tries to find the
+  # files in the specified `vast.plugin-dirs`.
+  # Note: Add libexample or libexample here to load the example plugin.
+  plugins: []
   # Don't load the default schema definitions.
   no-default-schema: false
   # The unique ID of this node.
@@ -139,6 +171,8 @@ vast:
       write: "-"
       # Treat the write option as a UNIX domain socket to connect to.
       uds: false
+      # Flatten nested objects into the top-level object.
+      flatten: false
 
     # The `vast export arrow` command exports events in the Apache Arrow format.
     # Unlike other export formats, arrow is always printed to stdout.
@@ -227,6 +261,8 @@ vast:
       #schema-file: <none>
       # An alternate schema as a string.
       #schema: <none>
+      # Use simdjson for parsing.
+      simdjson: false
 
     # The `vast import pcap` command imports PCAP logs.
     pcap:
@@ -270,6 +306,8 @@ vast:
       #schema-file: <none>
       # An alternate schema as a string.
       #schema: <none>
+      # Use simdjson for parsing.
+      simdjson: false
 
     # The `vast import syslog` command imports Syslog entries.
     syslog:
@@ -320,6 +358,21 @@ vast:
       # which may help when fully deterministic output is desired.
       #disable-timestamp-tags: false
 
+    # The `vast import zeek-json` command imports Zeek streaming JSON.
+    zeek-json:
+      # The endpoint to listen on ("[host]:port/type").
+      #listen: <none>
+      # Path to file to read events from or "-" for stdin.
+      read: "-"
+      # Treat the read option as a UNIX domain socket to connect to.
+      uds: false
+      # Path to an alternate schema.
+      #schema-file: <none>
+      # An alternate schema as a string.
+      #schema: <none>
+      # Use simdjson for parsing.
+      simdjson: false
+
   # The `vast pivot` command extracts related events of a given type.
   # For additionally available options, see export.pcap.
   pivot:
@@ -351,44 +404,6 @@ plugins:
 # be in conflict with VAST options, and are only listed here for completeness.
 
 caf:
-  logger:
-    # Format for rendering individual log file entries.
-    # Valid format specifiers are:
-    #  %c: logging category
-    #  %C: class name
-    #  %d: date
-    #  %F: source file of the log statement
-    #  %L: source line of the log statement
-    #  %m: log message
-    #  %M: source function of the log statement
-    #  %n: newline
-    #  %p: priority / severity of the message
-    #  %r: time since application start
-    #  %t: thread id
-    #  %a: actor id
-    #  %%: '%'
-    file-format: "%r %c %p %a %F:%L %m%n"
-    # Configures the minimum severity of messages written to the log file.
-    # Possible values: quiet, error, warning, info, verbose, debug, trace.
-    # File logging is only available for commands that start a node (e.g.,
-    # vast start). The levels above 'verbose' are usually not available in
-    # release builds.
-    file-verbosity: debug
-    # Mode for console log output generation.
-    # Possible values: none, colored, uncolored.
-    console: colored
-    # Format for printing individual log entries to the console.
-    # For a list of valid format specifiers, see file-format.
-    console-format: "%d %m"
-    # Configures the minimum severity of messages written to the console.
-    # For a list of valid log levels, see file-verbosity.
-    console-verbosity: info
-    # Excludes listed components from logging.
-    component-blacklist:
-      - caf
-      - caf_flow
-      - caf_stream
-
   scheduler:
     # Accepted alternative: "sharing".
     policy: stealing
