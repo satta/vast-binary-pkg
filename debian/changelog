@@ -1,3 +1,9 @@
+vast (0~20210128.76.g7f4ddfef60-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Sascha Steinbiss <satta@debian.org>  Mon, 08 Feb 2021 11:11:57 +0100
+
 vast (0~20201216.245.g5f93fae541-1) unstable; urgency=medium
 
   * New upstream release.
