@@ -1,3 +1,10 @@
+vast (0~20210128.251.g4e98547ddf-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Adjust config format.
+
+ -- Sascha Steinbiss <satta@debian.org>  Tue, 02 Mar 2021 16:51:12 +0100
+
 vast (0~20210128.76.g7f4ddfef60-1) unstable; urgency=medium
 
   * New upstream release.
