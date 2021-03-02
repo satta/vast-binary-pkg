@@ -21,7 +21,7 @@ vast:
   # Format for printing individual log entries to the log-file.
   # For a list of valid format specifiers, see spdlog format specification
   # at https://github.com/gabime/spdlog/wiki/3.-Custom-formatting
-  # file-format:
+  # file-format: "[%Y-%m-%dT%T.%e%z] [%n] [%l] [%s:%#] %v"
 
   # Configures the minimum severity of messages written to the log file.
   # Possible values: quiet, error, warning, info, verbose, debug, trace.
@@ -29,6 +29,13 @@ vast:
   # vast start). The levels above 'verbose' are usually not available in
   # release builds.
   # file-verbosity: debug
+
+  # Whether to enable automatic log rotation. If set to true, a new log file
+  # will be created when the size of the current log file exceeds 10 MiB.
+  disable-log-rotation: false
+
+  # The size limit when a log file should be rotated.
+  log-rotation-threshold: 10MiB
 
   # Mode for console log output generation. Automatic renders color only when
   # writing to a tty.
@@ -38,7 +45,7 @@ vast:
   # Format for printing individual log entries to the console.
   # For a list of valid format specifiers, see spdlog format specification
   # at https://github.com/gabime/spdlog/wiki/3.-Custom-formatting
-  # console-format:
+  # console-format: "%^[%T.%e] %v%$"
 
   # Configures the minimum severity of messages written to the console.
   # For a list of valid log levels, see file-verbosity.
@@ -73,6 +80,8 @@ vast:
   max-taste-partitions: 5
   # The amount of queries that can be executed in parallel.
   max-queries: 10
+  # The directory to use for the partition synopses of the meta index.
+  #meta-index-dir: <dbdir>/index
   # The false positive rate for lossy structures in the meta index.
   meta-index-fp-rate: 0.01
 
@@ -91,17 +100,19 @@ vast:
   # The configuration of the metrics reporting component.
   metrics:
     # Configures if and how metrics should be ingested back into VAST.
-    self_sink:
+    self-sink:
       enable: true
-      slice_size: 100
-      # slice_type: arrow
+      slice-size: 100
+      #slice-type: arrow
     # Configures if and where metrics should be written to a file.
-    file_sink:
+    file-sink:
       enable: false
+      real-time: false
       path: "/tmp/vast-metrics.log"
     # Configures if and where metrics should be written to a socket.
-    uds_sink:
+    uds-sink:
       enable: false
+      real-time: false
       path: "/tmp/vast-metrics.sock"
       type: "datagram"
 
