@@ -17,6 +17,7 @@ This changelog documents all notable user-facing changes of VAST.
   violation, resulting in a firing assertion. Streamlining the shutdown
   logic resolved the issue.
   [#1473](https://github.com/tenzir/vast/pull/1473)
+  [#1485](https://github.com/tenzir/vast/pull/1485)
 
 - 🐞 Insufficient permissions for one of the paths in the `schema-dirs` option
   would lead to a crash in `vast start`.
@@ -93,6 +94,8 @@ This changelog documents all notable user-facing changes of VAST.
   respectively. `-` creates a record with the field specified as its right
   operand removed.
   [#1407](https://github.com/tenzir/vast/pull/1407)
+  [#1487](https://github.com/tenzir/vast/pull/1487)
+  [#1490](https://github.com/tenzir/vast/pull/1490)
 
 - ⚠️ The option `vast.no-default-schema` is deprecated, as it is no longer needed
   to override types from bundled schemas.
