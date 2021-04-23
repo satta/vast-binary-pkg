@@ -113,6 +113,7 @@ type suricata.dhcp = suricata.component.common + record {
 
 type suricata.dns = suricata.component.common + record {
   dns: record {
+    version: count,
     type: enum {
       answer,
       query
@@ -124,7 +125,10 @@ type suricata.dns = suricata.component.common + record {
     rcode: string,
     rdata: string,
     ttl: count,
-    tx_id: count #index=hash
+    tx_id: count #index=hash,
+    grouped: record{
+      A: list<addr>
+    }
   }
 }
 
@@ -456,6 +460,49 @@ type suricata.rdp = suricata.component.common + record {
     server_supports: list<string>,
     x509_serials: list<string>,
     channels: list<string>
+  }
+}
+
+// versions are strings because they are in the RFB spec and the EVE-JSON:
+// - https://tools.ietf.org/html/rfc6143#section-7.1.1
+// - https://suricata.readthedocs.io/en/suricata-6.0.1/output/eve/eve-json-format.html#event-type-rfb
+type suricata.rfb = suricata.component.common + record {
+  rfb: record {
+    client_protocol_version: record {
+      major: string,
+      minor: string
+    },
+    server_protocol_version: record {
+      major: string,
+      minor: string
+    },
+    authentication: record {
+      security_type: count,
+      vnc: record {
+        challenge: string,
+        response: string
+      },
+      security_result: string
+    },
+    server_security_failure_reason: string,
+    screen_shared: bool,
+    framebuffer: record {
+      width: count,
+      height: count,
+      name: string,
+      pixel_format: record {
+        bits_per_pixel: count,
+        depth: count,
+        big_endian: bool,
+        true_color: bool,
+        red_max: count,
+        green_max: count,
+        blue_max: count,
+        red_shift: count,
+        green_shift: count,
+        blue_shift: count
+      }
+    }
   }
 }
 
