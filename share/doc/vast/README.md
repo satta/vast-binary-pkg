@@ -24,7 +24,9 @@ The network telemetry engine for data-driven security investigations.
 [_Changelog_][changelog-url] &mdash;
 [_License and Scientific Use_](#license-and-scientific-use)
 
-Chat with us on [Matrix][chat-url].
+Chat with us on [Gitter][chat-url], or join us on Matrix at
+`#tenzir_vast:gitter.im`.
+
 </h4>
 
 ## Key Features
@@ -154,8 +156,8 @@ proceedings][nsdi-proceedings].
 </p>
 
 [docs]: https://docs.tenzir.com/vast
-[chat-badge]: https://img.shields.io/badge/matrix-chat-brightgreen.svg
-[chat-url]: https://tenzir.element.io
+[chat-badge]: https://img.shields.io/badge/gitter-chat-brightgreen.svg
+[chat-url]: https://gitter.im/tenzir/vast
 [ci-url]: https://github.com/tenzir/vast/actions?query=branch%3Amaster+workflow%3AVAST
 [ci-badge]: https://github.com/tenzir/vast/workflows/VAST/badge.svg?branch=master
 [ci-examples-url]: https://github.com/tenzir/vast/actions?query=branch%3Amaster+workflow%3A%22Jupyter+Notebook%22
@@ -168,7 +170,7 @@ proceedings][nsdi-proceedings].
 [changelog-url]: CHANGELOG.md
 [contributing-url]: https://github.com/tenzir/.github/blob/master/contributing.md
 [since-release-badge]: https://img.shields.io/github/commits-since/tenzir/vast/latest.svg?color=green
-[since-release-url]: https://github.com/tenzir/vast/compare/2021.03.25...master
+[since-release-url]: https://github.com/tenzir/vast/compare/2021.04.29...master
 [installation-url]: INSTALLATION.md
 
 [vast-paper]: https://www.usenix.org/system/files/conference/nsdi16/nsdi16-paper-vallentin.pdf
